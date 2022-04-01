@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+
+{% for key, value in book_stores.items %}
+
+<h4><a href="{{ value }}">{{key}}</a></h4>
+
+{% endfor %}
+
+{% endblock contents %}
