@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+    {% block contents %}
+
+    {% for key, value in kinokuniya_stores.items %}
+
+        {% if forloop.first %}
+        {% else %}
+            <p><a href="{{ value.stock_url }}" target="_blank">{{value.store_name}}</a></p>
+            <!-- <p> {{ value }} </p> -->
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock contents %}
+
+
+<!--
+
+    <a href="{{ value }}" target="_blank">{{key}}</a>
+-->

@@ -1,3 +1,4 @@
+from itertools import count
 from django.shortcuts import render
 from django.http import HttpResponse
 import requests
@@ -30,24 +31,31 @@ def searchfunc(request):
         books_data = {}
         id = 0
 
+        if list(BooksData.keys())[0] == 'error':
+            return HttpResponse('<h1> 検索が一致しませんでした </h1>')
+
         for con in BooksData['items']:
             print('-----------------------------------')
 
             try:
                 print(con['volumeInfo']['industryIdentifiers'])
 
+                if con['volumeInfo']['industryIdentifiers'] == 'null':
+                    isbn = 'null'
+
                 if len(con['volumeInfo']['industryIdentifiers']) == 2:
                     """isbn = {con['volumeInfo']['industryIdentifiers'][0]['type']: con['volumeInfo']['industryIdentifiers'][0]['identifier'],
                             con['volumeInfo']['industryIdentifiers'][1]['type']: con['volumeInfo']['industryIdentifiers'][1]['identifier']}
                     """  
+                    # ISBN_13 を取得
                     if con['volumeInfo']['industryIdentifiers'][0]['type'] == "ISBN_13":
                         isbn = int(con['volumeInfo']['industryIdentifiers'][0]['identifier'])
                     else:
                         isbn = int(con['volumeInfo']['industryIdentifiers'][1]['identifier'])
                 else:
-                    isbn = '000'
+                    isbn = 'null'
 
-                print(isbn)
+                print('isbn：',isbn)
                      
             except:
                 print('null')
@@ -68,7 +76,7 @@ def searchfunc(request):
         
         #print(json_str)
         #return HttpResponse(BooksData)
-        return render(request, 'index.html', {'books_data':books_data})
+        return render(request, 'index.html', {'books_data':books_data, 'query':title})
     else:
         # https://api.openbd.jp/v1/get?isbn={ISBN}
         return render(request, 'index.html')
@@ -103,12 +111,56 @@ def storefunc(request):
 
     return render(request, 'store.html', {'book_stores':book_stores})
 
+def jan_to_asin(jan13):
+    s = str(jan13)[3:12]
+    a = 10
+    c = 0
+   
+    for i in range(0, len(s)):
+        c += int(s[i]) *(a-i)
+
+    d = c % 11
+    d = 11 - d 
+    if d == 10:
+        d = "X"
+    return str(s) + str(d)
 
 def storesfinc(request, pk):
 
+    # pk = ISBN_13
     
-    book_stores = {'kinokuniya': 'https://www.kinokuniya.co.jp/f/dsg-01-' + str(pk),
-                'amazon': 'https://www.amazon.co.jp/exec/obidos/ASIN/'+ str(pk) +'/honnoinfo-22/',
+    book_stores = {'kinokuniya_online': 'https://www.kinokuniya.co.jp/f/dsg-01-' + str(pk),
+                'amazon': 'https://www.amazon.co.jp/dp/' + str(jan_to_asin(pk)),
                 'yodobasi': 'https://www.yodobashi.com/?word=' + str(pk)
     }
-    return render(request, 'store.html', {'book_stores':book_stores})
+    return render(request, 'store.html', {'book_stores':book_stores, 'ISBN':pk})
+
+
+def kinokuniya_store_func(request, pk):
+    keyword_url = 'https://store.kinokuniya.co.jp/store/?type=json'
+    response = requests.get(keyword_url)
+    response = response.json()
+    import pprint
+    #pprint.pprint(response['data'])
+
+    kinokuniya_stores = {}
+    count = 0
+
+    for i in response['data']:
+        kinokuniya_stores[count] = {
+            'store_id' : i['id'],
+            'stock_url' : 'https://www.kinokuniya.co.jp/kinonavi/disp/CKnNvSfGoodsPage.jsp' + i['service_urls'][1]['url'].split('/')[-1] + '&ptk=01&CAT=01&GOODS_STK_NO=' + str(pk),
+            'region' : i['address']['region'],
+            'store_name' : i['title']
+        }
+        count += 1
+        """print('-----------------------------')
+        pprint.pprint(i['title'])
+        pprint.pprint(i['service_urls'][1]['url'])
+        pprint.pprint(i['address']['region'])
+        pprint.pprint(i['id'])
+        print('-----------------------------')"""
+
+    # 'https://www.kinokuniya.co.jp/kinonavi/disp/CKnNvSfGoodsPage.jsp'+ store_id + '&ptk=01&CAT=01&GOODS_STK_NO=' + ISBN_13
+
+    return render(request, 'kinokuniya.html', {'kinokuniya_stores' : kinokuniya_stores})

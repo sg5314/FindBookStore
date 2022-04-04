@@ -18,7 +18,7 @@
                     {% for key, value in books_data.items %}
                     <p>
                         <h3>
-                            {% if value.isbn != "000" %}
+                            {% if value.isbn != "null" %}
                                 <a href="{%url 'stores' value.isbn %}">{{ value.title }}</a>
                             {% else %}
                                 {{ value.title }}
@@ -30,7 +30,6 @@
                             <img src='{{ value.img_data }}'>
                         {% endif %}
                     </p>
-                    
                     {% endfor %}
                 </div>
                 
