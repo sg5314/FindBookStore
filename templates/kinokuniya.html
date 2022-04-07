@@ -1,21 +1,50 @@
 {% extends 'base.html' %}
 
+    {% block customcss %}
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    {% endblock customcss %}
+
     {% block contents %}
-
-    {% for key, value in kinokuniya_stores.items %}
-
+    <div id = "app">
+    <select v-model="selected">
+    {% for key, kinokuniya_store in kinokuniya_stores.items %}
         {% if forloop.first %}
         {% else %}
-            <p><a href="{{ value.stock_url }}" target="_blank">{{value.store_name}}</a></p>
-            <!-- <p> {{ value }} </p> -->
+        <option id = 'key' value="{{ key }}">{{ key }}</option>
         {% endif %}
-
     {% endfor %}
+    </select>
 
+    <input type='hidden' id="kinokuniya_stores" value="{{ kinokuniya_stores }}">
+    <ul>
+        <li v-for="store in kinokuniya">
+            <a :href="store.stock_url" target="_blank">
+                [[ store.store_name ]]
+            </a>
+        </li>
+    </ul>
+
+    </div>
+
+    <script>
+
+        let app = new Vue({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data: function(){
+                return{
+                    selected: '',
+                    kinokuniya: '',
+                    kinokuniya_stores: document.getElementById('kinokuniya_stores').value.split("'").join('"'),
+                }
+            },
+            watch:{
+                selected: function(newVal, oldVal){
+                    this.kinokuniya = JSON.parse(this.kinokuniya_stores)[newVal]
+                }
+            }
+        });
+
+    </script>
+   
 {% endblock contents %}
-
-
-<!--
-
-    <a href="{{ value }}" target="_blank">{{key}}</a>
--->

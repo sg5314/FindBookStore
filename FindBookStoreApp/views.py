@@ -147,12 +147,29 @@ def kinokuniya_store_func(request, pk):
     count = 0
 
     for i in response['data']:
-        kinokuniya_stores[count] = {
+        if i['address']['region'] in kinokuniya_stores:
+            # 辞書の中に　〜県がある場合
+            kinokuniya_stores[i['address']['region']].append({
+                "store_id" : i['id'],
+                "stock_url" : 'https://www.kinokuniya.co.jp/kinonavi/disp/CKnNvSfGoodsPage.jsp' + i['service_urls'][1]['url'].split('/')[-1] + '&ptk=01&CAT=01&GOODS_STK_NO=' + str(pk),
+                "region" : i['address']['region'],
+                "store_name" : i['title']
+            }) 
+        else:
+            kinokuniya_stores[i['address']['region']] = [{
+                "store_id" : i['id'],
+                "stock_url" : 'https://www.kinokuniya.co.jp/kinonavi/disp/CKnNvSfGoodsPage.jsp' + i['service_urls'][1]['url'].split('/')[-1] + '&ptk=01&CAT=01&GOODS_STK_NO=' + str(pk),
+                "region" : i['address']['region'],
+                "store_name" : i['title']
+            }]
+
+
+        """kinokuniya_stores[count] = {
             'store_id' : i['id'],
             'stock_url' : 'https://www.kinokuniya.co.jp/kinonavi/disp/CKnNvSfGoodsPage.jsp' + i['service_urls'][1]['url'].split('/')[-1] + '&ptk=01&CAT=01&GOODS_STK_NO=' + str(pk),
             'region' : i['address']['region'],
             'store_name' : i['title']
-        }
+        }"""
         count += 1
         """print('-----------------------------')
         pprint.pprint(i['title'])
@@ -161,6 +178,7 @@ def kinokuniya_store_func(request, pk):
         pprint.pprint(i['id'])
         print('-----------------------------')"""
 
-    # 'https://www.kinokuniya.co.jp/kinonavi/disp/CKnNvSfGoodsPage.jsp'+ store_id + '&ptk=01&CAT=01&GOODS_STK_NO=' + ISBN_13
+        pprint.pprint(kinokuniya_stores)
+        print(",".join(list(kinokuniya_stores.keys())))
 
-    return render(request, 'kinokuniya.html', {'kinokuniya_stores' : kinokuniya_stores})
+    return render(request, 'kinokuniya.html', {'kinokuniya_stores' : kinokuniya_stores })
