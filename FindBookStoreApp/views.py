@@ -82,7 +82,7 @@ def searchfunc(request):
         return render(request, 'index.html')
     return HttpResponse('output')
 
-def storefunc(request):
+"""def storefunc(request):
 
     keyword_url = 'https://honto.jp/netstore/pd-store_0630360105.html'
     isbn_10 = '4798062219'
@@ -98,18 +98,18 @@ def storefunc(request):
                     'yodobasi': 'https://www.yodobashi.com/?word=' + isbn_13
     }
 
-    """r = requests.get(keyword_url)
+    r = requests.get(keyword_url)
     print(r.text)
     
     soup = BeautifulSoup(r.content, "lxml")
 
     p = soup.find('script', {'type':'application/ld+json'})
     print (p)
-    """
+    
     #response = json.dumps(requests.get(keyword_url).json(), indent=2)
     #remindId
 
-    return render(request, 'store.html', {'book_stores':book_stores})
+    return render(request, 'store.html', {'book_stores':book_stores})"""
 
 def jan_to_asin(jan13):
     s = str(jan13)[3:12]
@@ -125,13 +125,14 @@ def jan_to_asin(jan13):
         d = "X"
     return str(s) + str(d)
 
-def storesfinc(request, pk):
+def storefunc(request, pk):
 
     # pk = ISBN_13
     
     book_stores = {'kinokuniya_online': 'https://www.kinokuniya.co.jp/f/dsg-01-' + str(pk),
                 'amazon': 'https://www.amazon.co.jp/dp/' + str(jan_to_asin(pk)),
-                'yodobasi': 'https://www.yodobashi.com/?word=' + str(pk)
+                'yodobasi': 'https://www.yodobashi.com/?word=' + str(pk),
+                'tutaya' : 'https://shop.tsutaya.co.jp/book/product/' + str(pk) + '/',
     }
     return render(request, 'store.html', {'book_stores':book_stores, 'ISBN':pk})
 
@@ -147,6 +148,8 @@ def kinokuniya_store_func(request, pk):
     count = 0
 
     for i in response['data']:
+        print('-------------------------')
+        pprint.pprint(i['service_urls'])
         if i['address']['region'] in kinokuniya_stores:
             # 辞書の中に　〜県がある場合
             kinokuniya_stores[i['address']['region']].append({
@@ -178,7 +181,8 @@ def kinokuniya_store_func(request, pk):
         pprint.pprint(i['id'])
         print('-----------------------------')"""
 
-        pprint.pprint(kinokuniya_stores)
-        print(",".join(list(kinokuniya_stores.keys())))
+        #pprint.pprint(kinokuniya_stores)
+        #print(",".join(list(kinokuniya_stores.keys())))
+        print('-------------------------')
 
     return render(request, 'kinokuniya.html', {'kinokuniya_stores' : kinokuniya_stores })
