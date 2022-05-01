@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    path('', searchfunc),
+    path('', searchfunc, name='search'),
     path('stores/<int:pk>', storefunc, name='stores'),
     path('kinokuniya/<int:pk>',kinokuniya_store_func, name='kinokuniya')
 ]

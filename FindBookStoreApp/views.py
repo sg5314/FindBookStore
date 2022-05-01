@@ -1,5 +1,5 @@
 from itertools import count
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import requests
 import json
@@ -32,7 +32,7 @@ def searchfunc(request):
         id = 0
 
         if list(BooksData.keys())[0] == 'error':
-            return HttpResponse('<h1> 検索が一致しませんでした </h1>')
+            return redirect('search')
 
         for con in BooksData['items']:
             print('-----------------------------------')
@@ -129,12 +129,18 @@ def storefunc(request, pk):
 
     # pk = ISBN_13
     
-    book_stores = {'kinokuniya_online': 'https://www.kinokuniya.co.jp/f/dsg-01-' + str(pk),
-                'amazon': 'https://www.amazon.co.jp/dp/' + str(jan_to_asin(pk)),
-                'yodobasi': 'https://www.yodobashi.com/?word=' + str(pk),
-                'tutaya' : 'https://shop.tsutaya.co.jp/book/product/' + str(pk) + '/',
+    book_stores_online = {'紀伊国屋 オンライン書店': {'URL':'https://www.kinokuniya.co.jp/f/dsg-01-' + str(pk), 'IMG':'images/kinokuniya.jpg'},
+                'Amazon': {'URL':'https://www.amazon.co.jp/dp/' + str(jan_to_asin(pk)), 'IMG':'images/amazon.jpg'},
+                'ヨドバシカメラ': {'URL':'https://www.yodobashi.com/?word=' + str(pk), 'IMG':'images/yodobashi.jpg'},
+                'TSUTAYA' : {'URL':'https://shop.tsutaya.co.jp/book/product/' + str(pk) + '/', 'IMG':'images/tsutaya.jpg'},
     }
-    return render(request, 'store.html', {'book_stores':book_stores, 'ISBN':pk})
+
+
+    book_stores = {
+        '紀伊国屋': {'ISBN': pk, 'TAGNAME':'kinokuniya', 'IMG':'images/kinokuniya.jpg'},
+    }
+
+    return render(request, 'store.html', {'book_stores_online':book_stores_online, 'book_stores':book_stores})
 
 
 def kinokuniya_store_func(request, pk):

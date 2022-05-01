@@ -1,13 +1,66 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block customcss %}
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+{% endblock customcss %}
 
 {% block contents %}
 
-{% for key, value in book_stores.items %}
+<div id="app">
 
-<h4><a href="{{ value }}" target="_blank">{{key}}</a></h4>
+    
+    <div class="container">
+        <h2>オンライン書店</h2>
+        <div class="row">
+            {% for key, value in book_stores_online.items %}
+            
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <a href="{{ value.URL }}" target="_blank" style="text-decoration:none; color:black;">
+                    <img class="card-img-right flex-auto d-none d-lg-block" alt="Thumbnail [200x250]" style="height: 200px; width: 100%; display: block;" src="{% static value.IMG %}">
+                    <div class="card-body">
+                        <h5>{{key}}</h5>
+                    </div>
+                    </a>
+                </div>
+            </div>
+                
+            {% endfor %}
+        </div>
 
-{% endfor %}
+        <h2>店舗 在庫検索</h2>   
+        <div class="row">
+            {% for key, value in book_stores.items %}
+            
+            <div class="col-md-3">
+                <div class="card mb-4 shadow-sm">
+                    <a href="{% url value.TAGNAME value.ISBN %}" target="_blank" style="text-decoration:none; color:black;">
+                    <img class="card-img-right flex-auto d-none d-lg-block" alt="Thumbnail [200x250]" style="height: 200px; width: 100%; display: block;" src="{% static value.IMG %}">
+                    <div class="card-body">
+                        <h5>{{key}}</h5>
+                    </div>
+                    </a>
+                </div>
+            </div>
+                
+            {% endfor %}
+        </div>
+        
+    </div> 
 
-<h4><a href="{% url 'kinokuniya' ISBN %}" target="_blank">紀伊國屋　在庫検索</a></h4>
+</div>
+    
+
+    
+
+
+
+
+
+
 
 {% endblock contents %}

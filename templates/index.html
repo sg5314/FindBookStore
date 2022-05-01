@@ -1,41 +1,60 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block contents %}
-<div class="p-5 mb-4 bg-light rounded-3">
-    <div class="container-fluid py-5">
-        <form method="POST" action="">{% csrf_token %} 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" name="title" placeholder="text">
-                <label for="floatingInput">タイトル</label>
-            </div>
-            <div class="d-grid gap-2 col-6 mx-auto" style="height: 25%;">
-                <button class="btn btn-secondary" type="submit">検索</button>
-            </div>
-            <div>
+{% block customcss %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+{% endblock customcss %}
 
+{% block contents %}
+<div id="app">
+    <v-app>
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <form method="POST" action="">{% csrf_token %} 
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="title" placeholder="text" value="{{ query }}">
+                    <label for="floatingInput">タイトル</label>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto" style="height: 25%;">
+                    <button class="btn btn-secondary" type="submit">検索</button>
+                </div>
                 <div>
-                    {% for key, value in books_data.items %}
-                    <p>
-                        <h3>
-                            {% if value.isbn != "null" %}
-                                <a href="{%url 'stores' value.isbn %}">{{ value.title }}</a>
+    
+                    <div>
+                        {% for key, value in books_data.items %}
+                        <p>
+                            <h3>
+                                {% if value.isbn != "null" %}
+                                    <a href="{%url 'stores' value.isbn %}">{{ value.title }}</a>
+                                {% else %}
+                                    {{ value.title }}
+                                {% endif %}
+                            </h3>
+                            {% if value.img_data == "null" %}
+                                <img src="{% static 'images/not_book.jpg' %}" style="height:150px">
                             {% else %}
-                                {{ value.title }}
+                                <img src='{{ value.img_data }}'>
                             {% endif %}
-                        </h3>
-                        {% if value.img_data == "null" %}
-                            <img src="{% static 'images/not_book.jpg' %}" style="height:150px">
-                        {% else %}
-                            <img src='{{ value.img_data }}'>
-                        {% endif %}
-                    </p>
-                    {% endfor %}
+                        </br>
+                        </p>
+                        {% endfor %}
+                    </div>
+                    
                 </div>
                 
-            </div>
-            
-            
-        </form>
+                
+            </form>
+    </div>
+    </v-app>
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script>
+
+</script>
 {% endblock contents %}
