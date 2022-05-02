@@ -1,0 +1,5 @@
+<select v-model="selected">
+    {% for key, kinokuniya_store in kinokuniya_stores.items %}
+        <option id = 'key' value="{{ key }}">{{ key }}</option>
+    {% endfor %}
+    </select>

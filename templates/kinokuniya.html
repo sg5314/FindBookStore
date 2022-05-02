@@ -1,46 +1,49 @@
 {% extends 'base.html' %}
+{% load static %}
 
     {% block customcss %}
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <link href="{% static 'css/app_kinokuniya.css' %}" rel="stylesheet">
     {% endblock customcss %}
 
     {% block contents %}
     <div id = "app">
-    <select v-model="selected">
-    {% for key, kinokuniya_store in kinokuniya_stores.items %}
-        {% if forloop.first %}
-        {% else %}
-        <option id = 'key' value="{{ key }}">{{ key }}</option>
-        {% endif %}
-    {% endfor %}
-    </select>
-
+        <div class="cp_ipselect cp_sl01">
+            <select v-model="selected">
+            {% for key, kinokuniya_store in kinokuniya_stores.items %}
+                <option id = 'key' value="{{ key }}">{{ key }}</option>
+            {% endfor %}
+            </select>
+        </div>
     <input type='hidden' id="kinokuniya_stores" value="{{ kinokuniya_stores }}">
-    <ul>
-        <li v-for="store in kinokuniya">
-            <a :href="store.stock_url" target="_blank">
-                [[ store.store_name ]]
-            </a>
-        </li>
-    </ul>
+    <div class="container">
+        <ul>
+            <li v-for="store in kinokuniya">
+                <a :href="store.stock_url" target="_blank" style="text-decoration:none; color:black;">
+                    [[ store.store_name ]]
+                </a>
+            </li>
+        </ul>
+    </div>
+
 
     </div>
 
     <script>
-
+        const stores_data = JSON.parse(document.getElementById('kinokuniya_stores').value.split("'").join('"'));
         let app = new Vue({
             el: '#app',
             delimiters: ['[[', ']]'],
             data: function(){
                 return{
-                    selected: '',
+                    selected: Object.keys(stores_data),
                     kinokuniya: '',
-                    kinokuniya_stores: document.getElementById('kinokuniya_stores').value.split("'").join('"'),
+                    kinokuniya_stores: stores_data,
                 }
             },
             watch:{
                 selected: function(newVal, oldVal){
-                    this.kinokuniya = JSON.parse(this.kinokuniya_stores)[newVal]
+                    this.kinokuniya = this.kinokuniya_stores[newVal]
                 }
             }
         });
