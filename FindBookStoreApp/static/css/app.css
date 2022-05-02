@@ -1,0 +1,28 @@
+.btn-social-long-facebook {
+    color: #FFF;/*文字・アイコン色*/
+    border-radius: 7px;/*角丸に*/
+    display: inline-block;
+    text-align: center;/*中身を中央寄せ*/
+    font-size: 25px;/*文字のサイズ*/
+    line-height: 50px;/*高さと合わせる*/
+    background: #4966a0;
+    overflow: hidden;/*はみ出た部分を隠す*/
+    text-decoration:none;/*下線は消す*/
+  }
+  
+  .btn-social-long-facebook .fa-facebook {
+    text-shadow: 2px 2px 1px #224282;
+    font-size: 30px;
+  }
+  
+  .btn-social-long-facebook span {
+    /*テキスト*/
+    display:inline-block;
+    transition: .5s;
+  }
+  
+  .btn-social-long-facebook:hover span {
+    /*ホバーで一周回転*/
+    -webkit-transform: rotateX(360deg);
+    transform: rotateX(360deg);
+  }

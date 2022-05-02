@@ -6,11 +6,11 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
 {% endblock customcss %}
 
 {% block contents %}
 <div id="app">
-    <v-app>
     <div class="p-5 mb-4 bg-light rounded-3">
         <div class="container-fluid py-5">
             <form method="POST" action="">{% csrf_token %} 
@@ -19,36 +19,33 @@
                     <label for="floatingInput">タイトル</label>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto" style="height: 25%;">
-                    <button class="btn btn-secondary" type="submit">検索</button>
+                    <!--<button class="btn btn-secondary" type="submit">検索</button>-->
+                    <button href="#" class="btn-social-long-facebook" type="submit"><span>検索</span></button>
                 </div>
                 <div>
-    
-                    <div>
-                        {% for key, value in books_data.items %}
-                        <p>
-                            <h3>
-                                {% if value.isbn != "null" %}
-                                    <a href="{%url 'stores' value.isbn %}">{{ value.title }}</a>
-                                {% else %}
-                                    {{ value.title }}
-                                {% endif %}
-                            </h3>
-                            {% if value.img_data == "null" %}
-                                <img src="{% static 'images/not_book.jpg' %}" style="height:150px">
+                    {% for key, value in books_data.items %}
+                    <p>
+                        <h3>
+                            {% if value.isbn != "null" %}
+                                <a href="{%url 'stores' value.isbn %}">{{ value.title }}</a>
                             {% else %}
-                                <img src='{{ value.img_data }}'>
+                                {{ value.title }}
                             {% endif %}
+                        </h3>
+                        {% if value.img_data == "null" %}
+                            <img src="{% static 'images/not_book.jpg' %}" style="height:150px">
+                        {% else %}
+                            <img src='{{ value.img_data }}'>
+                        {% endif %}
                         </br>
-                        </p>
-                        {% endfor %}
-                    </div>
-                    
+                    </p>
+                    {% endfor %}
                 </div>
-                
-                
             </form>
+        </div>
     </div>
-    </v-app>
+</div>
+    
 </div>
 
 
