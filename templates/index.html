@@ -22,24 +22,45 @@
                     <!--<button class="btn btn-secondary" type="submit">検索</button>-->
                     <button href="#" class="btn-social-long-facebook" type="submit"><span>検索</span></button>
                 </div>
-                <div>
-                    {% for key, value in books_data.items %}
-                    <p>
-                        <h3>
-                            {% if value.isbn != "null" %}
-                                <a href="{%url 'stores' value.isbn %}">{{ value.title }}</a>
-                            {% else %}
-                                {{ value.title }}
-                            {% endif %}
-                        </h3>
-                        {% if value.img_data == "null" %}
-                            <img src="{% static 'images/not_book.jpg' %}" style="height:150px">
-                        {% else %}
-                            <img src='{{ value.img_data }}'>
-                        {% endif %}
-                        </br>
-                    </p>
-                    {% endfor %}
+                <div class="container">
+                    <div class="row">
+                        {% for key, value in books_data.items %}
+                        
+                        <div class="col-md-3">
+                            <div class="card mb-3" style="width: 18rem;">
+                                {% if value.isbn != "null" %}
+                                <a href="{%url 'stores' value.isbn %}" style="text-align:center; text-decoration:none; color:black;">
+                                    <div style="text-align:center;">
+                                    {% if value.img_data == "null" %}
+                                        <img class="" alt="Thumbnail [200x250]" src="{% static 'images/not_book.jpg' %}" style="height:150px">
+                                    {% else %}
+                                        <img class="" alt="Thumbnail [200x250]" src='{{ value.img_data }}'>
+                                    {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="font-size: 15px;">{{ value.title }}</div>
+                                    </div>
+                                    
+                                </a>
+                                {% else %}
+                                    <div style="text-align:center;">
+                                    {% if value.img_data == "null" %}
+                                        <img class="" alt="Thumbnail [200x250]" src="{% static 'images/not_book.jpg' %}" style="height:150px">
+                                    {% else %}
+                                        <img class="" alt="Thumbnail [200x250]" src='{{ value.img_data }}'>
+                                    {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <div style="font-size: 15px;">{{ value.title }}</div>
+                                    </div>
+                                    
+                                {% endif %}
+
+                            </div>
+                        </div>
+                            
+                        {% endfor %}
+                    </div>
                 </div>
             </form>
         </div>
@@ -47,11 +68,4 @@
 </div>
     
 </div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-<script>
-
-</script>
 {% endblock contents %}
