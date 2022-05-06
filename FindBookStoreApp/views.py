@@ -1,10 +1,6 @@
-from itertools import count
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import requests
-import json
-from rest_framework.views import APIView
-from django.http import JsonResponse
 
 # Create your views here.
 
