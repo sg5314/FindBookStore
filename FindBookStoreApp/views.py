@@ -104,8 +104,8 @@ def kinokuniya_store_func(request, pk):
     count = 0
 
     for i in response['data']:
-        print('-------------------------')
-        pprint.pprint(i['service_urls'])
+        #print('-------------------------')
+        #pprint.pprint(i['service_urls'])
         if i['address']['region'] in kinokuniya_stores:
             # 辞書の中に　〜県がある場合
             kinokuniya_stores[i['address']['region']].append({
@@ -122,6 +122,6 @@ def kinokuniya_store_func(request, pk):
                 "store_name" : i['title']
             }]
         count += 1
-        print('-------------------------')
+        #print('-------------------------')
 
     return render(request, 'kinokuniya.html', {'kinokuniya_stores' : kinokuniya_stores })
