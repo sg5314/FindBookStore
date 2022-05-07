@@ -1,5 +1,6 @@
 name: Django CI FindBookStore
 
+# https://zenn.dev/koogawa/articles/45705e67ee724e46166b
 on:
   # トリガーとなるイベント
   push:
