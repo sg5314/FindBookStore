@@ -153,5 +153,5 @@ if not DEBUG:
         'whitenoise.middleware.WhiteNoiseMiddleware',
     ]
 
-    # HerokuのConfigを読み込み
+    # HerokuのConfigの読み込み
     django_heroku.settings(locals())
