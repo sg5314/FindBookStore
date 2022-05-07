@@ -163,4 +163,4 @@ if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     # HerokuのConfigの読み込み
-    django_heroku.settings(locals())
+    django_heroku.settings(locals(), staticfiles=False)
