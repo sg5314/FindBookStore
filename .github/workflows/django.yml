@@ -16,7 +16,7 @@ jobs:
       max-parallel: 4
       matrix:
         # ジョブで置き換える変数を定義
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.8.9]
 
     steps:
       # https://github.com/marketplace/actions/checkout
@@ -31,4 +31,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        python manage.py testa
