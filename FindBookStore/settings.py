@@ -82,12 +82,7 @@ WSGI_APPLICATION = 'FindBookStore.wsgi.application'
     }
 }"""
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'name',
-    }
-}
+
 
 
 # Password validation
