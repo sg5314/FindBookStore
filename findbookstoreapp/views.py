@@ -5,8 +5,9 @@ import requests
 # Create your views here.
 
 def searchBook(keyword):
+    params = {'Country': "JP", 'maxResults': 30}
     keyword_url = 'https://www.googleapis.com/books/v1/volumes?q=' + keyword
-    response = requests.get(keyword_url).json()
+    response = requests.get(keyword_url, params=params).json()
     return response
 
 def searchfunc(request):
