@@ -7,8 +7,8 @@ It is an introduction to the links to the screens to check the inventory of book
 
 # DEMO
 
-- 以下のサイトにアクセス
-* [在庫店舗検索システム](https://findbookstore.herokuapp.com/)
+- 以下のサイトにアクセス</br>
+[在庫店舗検索システム](https://findbookstore.herokuapp.com/)
  
 # Requirement
 
