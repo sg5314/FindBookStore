@@ -1,6 +1,6 @@
 # FindBookStore
  
-It is an introduction to the links to the screens to check the inventory of books </br>
+It is an introduction to the links to the screens to check the inventory of bookstore </br>
 (online Bookstores and real Bookstores).
 
 本の在庫（オンライン書店・リアル書店）を確認するために，「サイト先リンク」を紹介するシステム
