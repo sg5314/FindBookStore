@@ -1,15 +1,19 @@
 # FindBookStore
  
+<p align="center">
 It is an introduction to the links to the screens to check the inventory of bookstore </br>
 (online Bookstores and real Bookstores).
-
+</p>
+<p align="center">
 本の在庫（オンライン書店・リアル書店）を確認するために，「サイト先リンク」を紹介するシステム
+</p>
 
-# DEMO
+# DEMO（公開URL）
 
-- 以下のサイトにアクセス</br>
-[在庫店舗検索システム](https://findbookstore.herokuapp.com/)
- 
+<p align="center">
+<a href="https://findbookstore.herokuapp.com/">在庫店舗検索システム</a>
+</p>
+
 # Requirement
 
 - Python 3.8.9
