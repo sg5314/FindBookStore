@@ -1,0 +1,9 @@
+version: "3" # composeファイルのバージョン
+services: # データベースは使用しない
+    app: # サービス名
+        build: . # ビルドに使うDockerfileの場所
+        tty: true 
+        stdin_open: false
+        ports:
+            - 3000:3000
+        command: "python3 manage.py runserver 0.0.0.0:3000"

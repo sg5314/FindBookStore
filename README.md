@@ -20,28 +20,23 @@ It is an introduction to the links to the screens to check the inventory of book
 - 必要なPythonパッケージ：requirements.txt
   
  
-# Installation
+# Installation & Usage
  
-Requirementで列挙したライブラリなどのインストール方法を説明
+### 1.プロジェクトをクローン
 
-docker build -t findbookstore:latest .
+    git clone https://github.com/sg5314/FindBookStore.git
 
-コンテナを切ったらすぐにコンテナも削除
-docker run --rm -it -v ./FindBookStore:/FindBookStore {IMAGE ID} bash
- 
-```bash
+### 2.Dockerイメージの作成 ＆ Dockerコンテナの起動
 
-```
- 
-# Usage
+    docker-compose up
 
- 
-* インストールが完了後に，以下のコマンドを実行
+### 3.以下のURLにアクセス
 
-```bash
-python manage.py runserver
-```
-* <http://127.0.0.1:8000/> にアクセス
+* http://0.0.0.0:3000/
+
+## Dockerコンテナの削除
+
+    docker-compose down
  
 # Author
 
